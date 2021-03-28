@@ -1,58 +1,64 @@
-
 const cells = document.querySelectorAll(".cell")
 const board = document.getElementById("tableBoard")
-let player1 = "X"
-let player2 = "O"
+const player1 = "X"
+const player2 = "O"
 let turn = player2
-let player1Name
-let player2Name
+let player1Name;
+let player2Name;
+let winner;
+const resultElement = document.querySelector(".result")
+const resultPlayerOneTitle = document.querySelector(".firstPlayer")
+const resultPlayerTwoTitle = document.querySelector(".secondPlayer")
+const firstPlayerResultElement = document.querySelector(".firstPlayerResult")
+const secondPlayerResultElement = document.querySelector(".secondPlayerResult")
 
 startGame()
 
 function startGame() {
-    if (localStorage.getItem("player1Name") === null) {
+
+    winner = "";
+    if (sessionStorage.getItem("player1Name") === null) {
         player1Name = prompt("Please enter the name of Player 1")
-        localStorage.setItem('player1Name', player1Name)
+        sessionStorage.setItem('player1Name', player1Name)    
     }
     else {
-        player1Name = localStorage.getItem("player1Name")
+        player1Name = sessionStorage.getItem("player1Name")
     }
 
-    if (localStorage.getItem("player2Name") === null) {
+    if (sessionStorage.getItem("player2Name") === null) {
         player2Name = prompt("Please enter the name of Player 2")
-        localStorage.setItem('player2Name', player2Name)
+        sessionStorage.setItem('player2Name', player2Name) 
     }
     else {
-        player2Name = localStorage.getItem("player2Name")
+        player2Name = sessionStorage.getItem("player2Name")
     }
 
-    if (player1Name === null || player1Name === " ") {
-        player1Name = "Player 1"
+    if (player1Name === null || player1Name === "") {
+        player1Name = "Player 1" 
     }
-    if (player2Name === null || player2Name === " ") {
-        player2Name = "Player 2"
+    if (player2Name === null || player2Name === "") {
+        player2Name = "Player 2"   
     }
 
 }
 
-
-
 const whoseTurnElement = document.querySelector(".whose-turn")
 
 board.addEventListener("click", function (e) {
-    let turn = changeTurn()
-    if (turn === "O") {
-        whoseTurnElement.textContent = `${player1Name} oynuyor - ${player1}`
-    }
-    else {
-        whoseTurnElement.textContent = `${player2Name} oynuyor - ${player2} `
-    }
+
     let clicked = e.target.id
 
+    if (cells[clicked].textContent === "") {
+        let turn = changeTurn()
+        if (turn === "O") {
+            whoseTurnElement.textContent = `${player1Name} is playing - (${player1})`
+        }
+        else {
+            whoseTurnElement.textContent = `${player2Name} is playing - (${player2}) `
+        }
+    }
     play(turn, clicked)
-
 })
-
 
 function changeTurn() {
     if (turn === player1) {
@@ -70,68 +76,93 @@ function play(turn, clicked) {
     if (cells[clicked].textContent === "") {
         cells[clicked].textContent = turn
     }
-
     checkWinner(clicked, turn)
-
 }
 
 function checkWinner() {
 
     if (cells[0].textContent === "X" && cells[1].textContent === "X" && cells[2].textContent === "X") {
-        winner(player1Name)
+        winner = player1Name
+        winner(winner)
     }
     if (cells[0].textContent === "O" && cells[1].textContent === "O" && cells[2].textContent === "O") {
-        winner(player2Name)
+        winner = player2Name
+        winner(winner)
     }
     if (cells[3].textContent === "X" && cells[4].textContent === "X" && cells[5].textContent === "X") {
-        winner(player1Name)
+        winner = player1Name    
+        winnerFunc(winner)
     }
     if (cells[3].textContent === "O" && cells[4].textContent === "O" && cells[5].textContent === "O") {
-        winner(player2Name)
+        winner = player2Name 
+        winnerFunc(winner)
     }
     if (cells[6].textContent === "X" && cells[7].textContent === "X" && cells[8].textContent === "X") {
-        winner(player1Name)
+        winner = player1Name   
+        winnerFunc(winner)
     }
     if (cells[6].textContent === "O" && cells[7].textContent === "O" && cells[8].textContent === "O") {
-        winner(player2Name)
+        winner = player2Name
+        winnerFunc(winner)
     }
     if (cells[0].textContent === "X" && cells[3].textContent === "X" && cells[6].textContent === "X") {
-        winner(player1Name)
+        winner = player1Name
+        winnerFunc(winner)
     }
     if (cells[0].textContent === "O" && cells[3].textContent === "O" && cells[6].textContent === "O") {
-        winner(player2Name)
+        winner = player2Name 
+        winnerFunc(winner)
     }
     if (cells[1].textContent === "X" && cells[4].textContent === "X" && cells[7].textContent === "X") {
-        winner(player1Name)
+        winner = player1Name    
+        winnerFunc(winner)
     }
     if (cells[1].textContent === "O" && cells[4].textContent === "O" && cells[7].textContent === "O") {
-        winner(player2Name)
+        winner = player2Name
+        winnerFunc(winner)
     }
     if (cells[2].textContent === "X" && cells[5].textContent === "X" && cells[8].textContent === "X") {
-        winner(player1Name)
+        winner = player1Name
+        winnerFunc(winner)
     }
     if (cells[2].textContent === "O" && cells[5].textContent === "O" && cells[8].textContent === "O") {
-        winner(player2Name)
+        winner = player2Name
+        winnerFunc(winner)
     }
     if (cells[0].textContent === "X" && cells[4].textContent === "X" && cells[8].textContent === "X") {
-        winner(player1Name)
+        winner = player1Name
+        winnerFunc(winner)
     }
     if (cells[0].textContent === "O" && cells[4].textContent === "O" && cells[8].textContent === "O") {
-        winner(player2Name)
+        winner = player2Name
+        winnerFunc(winner)
     }
     if (cells[2].textContent === "X" && cells[4].textContent === "X" && cells[6].textContent === "X") {
-        winner(player1Name)
+        winner = player1Name
+        winnerFunc(winner)
     }
     if (cells[2].textContent === "O" && cells[4].textContent === "O" && cells[6].textContent === "O") {
-        winner(player2Name)
+        winner = player2Name
+        winnerFunc(winner)
+    }
+    if ((cells[0].textContent !== "" && cells[1].textContent !== "" && cells[2].textContent !== "" && cells[3].textContent !== "" && cells[4].textContent !== "" && cells[5].textContent !== "" && cells[6].textContent !== "" && cells[7].textContent !== "" && cells[8].textContent !== "") && winner === "") {
+        draw()
     }
 }
 
-function winner(value) {
-    alert("KAZANAN : " + value)
+function winnerFunc(value) {
+    alert("WINNER : " + value)
+    gameOver()
+}
+
+function draw() {
+    alert("DRAW !")
     gameOver()
 }
 
 function gameOver() {
     location.reload()
 }
+
+
+

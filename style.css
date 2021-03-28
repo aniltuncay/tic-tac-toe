@@ -46,3 +46,19 @@ tr td:last-child{
     font-size: 30px;
     color: white;
 }
+
+/* .result{
+    margin-top: 55px;
+    color: white;
+    font-size: 45px;
+    text-align: center;
+}
+
+.result-title,.result-content{
+    display: flex;
+    justify-content: space-around;
+}
+
+.result-content{
+    margin-top: 25px;
+} */
