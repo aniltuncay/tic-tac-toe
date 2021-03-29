@@ -11,15 +11,19 @@ const resultPlayerOneTitle = document.querySelector(".firstPlayer")
 const resultPlayerTwoTitle = document.querySelector(".secondPlayer")
 const firstPlayerResultElement = document.querySelector(".firstPlayerResult")
 const secondPlayerResultElement = document.querySelector(".secondPlayerResult")
+let firstPlayerResult = 0;
+let secondPlayerResult = 0;
+const whoseTurnElement = document.querySelector(".whose-turn")
 
 startGame()
 
 function startGame() {
 
     winner = "";
+   
     if (sessionStorage.getItem("player1Name") === null) {
         player1Name = prompt("Please enter the name of Player 1")
-        sessionStorage.setItem('player1Name', player1Name)    
+        sessionStorage.setItem('player1Name', player1Name)
     }
     else {
         player1Name = sessionStorage.getItem("player1Name")
@@ -27,25 +31,30 @@ function startGame() {
 
     if (sessionStorage.getItem("player2Name") === null) {
         player2Name = prompt("Please enter the name of Player 2")
-        sessionStorage.setItem('player2Name', player2Name) 
+        sessionStorage.setItem('player2Name', player2Name)
     }
     else {
         player2Name = sessionStorage.getItem("player2Name")
     }
 
     if (player1Name === null || player1Name === "") {
-        player1Name = "Player 1" 
+        player1Name = "Player 1"
     }
     if (player2Name === null || player2Name === "") {
-        player2Name = "Player 2"   
+        player2Name = "Player 2"
     }
+
+    resultPlayerOneTitle.textContent = player1Name;
+    resultPlayerTwoTitle.textContent = player2Name;
+    whoseTurnElement.textContent = `${player1Name} is playing - (${player1})`
+    createHtml(firstPlayerResult, secondPlayerResult)
 
 }
 
-const whoseTurnElement = document.querySelector(".whose-turn")
+
 
 board.addEventListener("click", function (e) {
-
+    
     let clicked = e.target.id
 
     if (cells[clicked].textContent === "") {
@@ -90,15 +99,15 @@ function checkWinner() {
         winner(winner)
     }
     if (cells[3].textContent === "X" && cells[4].textContent === "X" && cells[5].textContent === "X") {
-        winner = player1Name    
+        winner = player1Name
         winnerFunc(winner)
     }
     if (cells[3].textContent === "O" && cells[4].textContent === "O" && cells[5].textContent === "O") {
-        winner = player2Name 
+        winner = player2Name
         winnerFunc(winner)
     }
     if (cells[6].textContent === "X" && cells[7].textContent === "X" && cells[8].textContent === "X") {
-        winner = player1Name   
+        winner = player1Name
         winnerFunc(winner)
     }
     if (cells[6].textContent === "O" && cells[7].textContent === "O" && cells[8].textContent === "O") {
@@ -110,11 +119,11 @@ function checkWinner() {
         winnerFunc(winner)
     }
     if (cells[0].textContent === "O" && cells[3].textContent === "O" && cells[6].textContent === "O") {
-        winner = player2Name 
+        winner = player2Name
         winnerFunc(winner)
     }
     if (cells[1].textContent === "X" && cells[4].textContent === "X" && cells[7].textContent === "X") {
-        winner = player1Name    
+        winner = player1Name
         winnerFunc(winner)
     }
     if (cells[1].textContent === "O" && cells[4].textContent === "O" && cells[7].textContent === "O") {
@@ -152,6 +161,7 @@ function checkWinner() {
 
 function winnerFunc(value) {
     alert("WINNER : " + value)
+    addPoint(value);
     gameOver()
 }
 
@@ -161,8 +171,32 @@ function draw() {
 }
 
 function gameOver() {
-    location.reload()
+    cells[0].textContent = ""
+    cells[1].textContent = ""
+    cells[2].textContent = ""
+    cells[3].textContent = ""
+    cells[4].textContent = ""
+    cells[5].textContent = ""
+    cells[6].textContent = ""
+    cells[7].textContent = ""
+    cells[8].textContent = ""
+    turn=player1Name
+    startGame();
 }
 
+function addPoint(value) {
+    if (value === player1Name) {
+        firstPlayerResult++
+    }
+    else if (value === player2Name) {
+        secondPlayerResult++
+    }
 
+    createHtml(firstPlayerResult, secondPlayerResult)
 
+}
+
+function createHtml(firstPlayerResult, secondPlayerResult) {
+    firstPlayerResultElement.textContent = firstPlayerResult
+    secondPlayerResultElement.textContent = secondPlayerResult;
+}

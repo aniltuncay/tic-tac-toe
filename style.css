@@ -47,7 +47,7 @@ tr td:last-child{
     color: white;
 }
 
-/* .result{
+.result{
     margin-top: 55px;
     color: white;
     font-size: 45px;
@@ -61,4 +61,4 @@ tr td:last-child{
 
 .result-content{
     margin-top: 25px;
-} */
+} 
