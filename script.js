@@ -92,11 +92,11 @@ function checkWinner() {
 
     if (cells[0].textContent === "X" && cells[1].textContent === "X" && cells[2].textContent === "X") {
         winner = player1Name
-        winner(winner)
+        winnerFunc(winner)
     }
     if (cells[0].textContent === "O" && cells[1].textContent === "O" && cells[2].textContent === "O") {
         winner = player2Name
-        winner(winner)
+        winnerFunc(winner)
     }
     if (cells[3].textContent === "X" && cells[4].textContent === "X" && cells[5].textContent === "X") {
         winner = player1Name
